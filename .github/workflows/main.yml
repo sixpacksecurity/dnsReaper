@@ -1,0 +1,17 @@
+name: RunDnS
+
+on:
+  schedule:
+    # Runs "at 10 am everyday" (see https://crontab.guru)
+    - cron: '0 10 * * *'
+  
+jobs:
+  build:
+    runs-on:  ubuntu-latest
+    name: Build Image
+    steps:
+      - uses: actions/checkout@v3
+      - name: Build Image
+        run: docker build -t dnsreaper . 
+      - name: Run Image
+        run: docker run --rm dnsreaper aws
